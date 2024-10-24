@@ -1,0 +1,31 @@
+<%- include('header') %>
+<!-- header.ejs를 모듈로 포함 -->
+
+<main class="login-main">
+    <h2 class="login-main_title">짤방 저장소에</h2>
+    <p class="login-mainsubtitle">회원가입 해서 짤을 올려보세요!</p>
+
+    <section class="login-form">
+        <form action="/signup" method="POST" class="login-form_container" id="loginForm">
+            <label for="email" class="login-form_label">이메일</label>
+            <input type="email" id="email" name="email" class="login-form_input" required>
+
+            <label for="password" class="login-form_label">비밀번호</label>
+            <input type="password" id="password" name="password" class="login-form_input" required>
+
+            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+                <label for="nickname" class="login-form_label">닉네임</label>
+                <span id="nicknameError" class="error-message"></span>
+            </div>
+            <input type="text" id="nickname" name="nickname" class="login-form_input" required>
+
+            <div class="login-form_actions">
+                <button type="submit" class="login-form_button" id="signupButton-to-login">회원가입</button>
+            </div>
+        </form>
+    </section>
+</main>
+<script src="/scripts/signup.js"></script>
+</body>
+
+</html>
