@@ -35,8 +35,8 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
 
     // 한글만 포함된 경우
     if (koreanRegex.test(nicknameInput) && !/[a-zA-Z]/.test(nicknameInput)) {
-        if (nicknameInput.length > 6) {
-            nicknameError.textContent = '한글은 6자 이내로 입력해주세요.';
+        if (nicknameInput.length > 8) {
+            nicknameError.textContent = '한글은 8자 이내로 입력해주세요.';
             isValid = false;
         }
     }
