@@ -1,0 +1,54 @@
+<%- include('./admin-header') %>
+<h1 class="user-list__title">사용자 목록</h1>
+<table class="user-list__table">
+    <thead class="user-list__thead">
+        <tr class="user-list__row" style="pointer-events: none;">
+            <th class="user-list__header">이메일</th>
+            <th class="user-list__header">닉네임</th>
+            <th class="user-list__header">가입일</th>
+            <th class="user-list__header">관리</th>
+        </tr>
+    </thead>
+    <tbody class="user-list__body">
+        <% if (users && users.length > 0) { %>
+            <% // 관리자와 일반 사용자 분리 %>
+            <% const adminUsers = users.filter(user => user.role === 'admin'); %>
+            <% const normalUsers = users.filter(user => user.role !== 'admin'); %>
+            <% // 일반 사용자 최신순 정렬 %>
+            <% normalUsers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); %>
+            <% // 관리자 + 정렬된 일반 사용자 %>
+            <% const sortedUsers = [...adminUsers, ...normalUsers]; %>
+            <% sortedUsers.forEach(user => { %>
+                <tr class="user-list__row">
+                    <td class="user-list__data">
+                        <%= user.email %>
+                        <% if (user.role === 'admin') { %>
+                            <span class="admin-icon" style="color: rgb(0, 0, 0); margin-left: 5px;" title="관리자">★ 관리자</span>
+                        <% } %>
+                    </td>
+                    <td class="user-list__data">
+                        <%= user.nickname %>
+                    </td>
+                    <td class="user-list__data">
+                        <%= new Date(user.createdAt).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                    </td>
+                    <td class="user-list__data">
+                        <% if (user.role !== 'admin') { %>
+                            <button class="delete-btn" data-user-id="<%= user._id %>" data-user-email="<%= user.email %>">삭제</button>
+                        <% } else { %>
+                            <button class="delete-btn" style="background-color: #ccc; cursor: not-allowed;" disabled>삭제 불가</button>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+        <% } else { %>
+            <tr class="user-list__row user-list__row--no-data">
+                <td colspan="4" class="user-list__no-data">등록된 사용자가 없습니다.</td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<script src="/scripts/admin.js"></script>
+</body>
+</html>

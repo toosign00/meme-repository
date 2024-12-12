@@ -1,0 +1,125 @@
+.my-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.page-ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  list-style-type: none;
+  margin-top: 8.75rem;
+  cursor: pointer;
+}
+
+.page-ul li {
+  display: inline-block; 
+  width: 8rem;
+  text-decoration: none;
+  text-align: center;
+  padding: 0.625rem 0.9375rem;
+  background-color: var(--orange);
+  border-radius: 0.3125rem;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.page-ul li.active {
+  font-weight: 700;
+}
+
+.page-ul li:hover {
+  opacity: 0.8;
+}
+
+.content-section {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 3rem auto;
+}
+
+.content-section.active {
+  display: flex; 
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+#user-info p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#user-info strong {
+  color: #555;
+}
+
+#edit-form label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.2rem;
+}
+
+#edit-form input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.cta-btn {
+  background-color: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 0.3125rem;
+  padding: 0.625rem 0.9375rem;
+  cursor: pointer;
+}
+
+.cta-btn:hover {
+  opacity: 0.8;
+}
+
+.post-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-post {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.delete-post:hover {
+  background-color: #cc0000;
+}
+
+.no-posts {
+  text-align: center;
+  color: #666;
+  width: 100%;
+  padding: 2rem;
+  margin: 0 auto;
+}

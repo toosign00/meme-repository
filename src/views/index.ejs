@@ -1,6 +1,82 @@
-<%- include('header') %> <!-- header.ejs를 모듈로 포함 -->
+<%- include('header') %>
 
+    <main class="grid-container">
+        <div class="masonry-grid">
+            <% if (typeof posts !=='undefined' && posts && posts.length> 0) { %>
+                <% posts.forEach(post=> { %>
+                    <div class="grid-item" data-post-id="<%= post._id %>">
+                        <div class="image-container">
+                            <img src="<%= post.imageUrl %>" alt="<%= post.title %>" loading="lazy">
+                        </div>
+                        <div class="post-info">
+                            <div class="post-header">
+                                <h3 class="post-title">
+                                    <%= post.title %>
+                                </h3>
+                                <div class="like-count">
+                                    <span>♡</span>
+                                    <span class="count">
+                                        <%= post.likeCount || 0 %>
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="post-author">
+                                <%= post.authorNickname %>
+                            </p>
+                        </div>
+                    </div>
+                    <% }); %>
+                        <% } %>
+        </div>
+    </main>
+    <script>
+        function initializeLikeButtons() {
+            document.querySelectorAll('.like-count').forEach(likeContainer => {
+                // 전체 like-count 컨테이너에 이벤트 리스너 추가
+                likeContainer.addEventListener('click', async (e) => {
+                    // 하트 아이콘과 카운트 span 선택
+                    const heartIcon = likeContainer.querySelector('span:first-child');
+                    const countSpan = likeContainer.querySelector('.count');
 
-</body>
+                    // 포스트 ID를 grid-item의 부모 요소에서 찾음
+                    const postId = likeContainer.closest('.grid-item').getAttribute('data-post-id');
 
-</html>
+                    try {
+                        const response = await fetch(`/posts/${postId}/like`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            console.log('Like response:', data);
+
+                            if (data.isLiked) {
+                                heartIcon.textContent = '♥';
+                            } else {
+                                heartIcon.textContent = '♡';
+                            }
+
+                            countSpan.textContent = data.likeCount;
+                        } else {
+                            console.error('Like failed:', data);
+                            alert(data.message || '좋아요 처리 중 오류가 발생했습니다.');
+                        }
+                    } catch (error) {
+                        console.error('좋아요 요청 중 오류:', error);
+                        alert('좋아요 처리 중 오류가 발생했습니다.');
+                    }
+                });
+            });
+        }
+        
+        // DOM 로드 시 좋아요 버튼 초기화
+        document.addEventListener('DOMContentLoaded', initializeLikeButtons);
+    </script>
+    <script src="/scripts/main.js"></script>
+    </body>
+
+    </html>

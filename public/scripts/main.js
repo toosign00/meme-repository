@@ -1,3 +1,7 @@
+document.getElementById('signupButton').addEventListener('click', () => {
+    window.location.href = '/signup';
+});
+
 document.getElementById('loginForm').addEventListener('submit', function (event) {
     const nicknameInput = document.getElementById('nickname').value;
     const nicknameError = document.getElementById('nicknameError');

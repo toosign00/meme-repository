@@ -19,11 +19,11 @@
 }
 
 .login-form_container {
-    background-color: #fff;
+    background-color: var(--white);
     padding: 2rem;
     border-radius: 0.625rem;
     /* 10px */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
     width: 20rem;
     display: flex;
     flex-direction: column;
@@ -58,10 +58,9 @@
     padding: 0.5rem 1rem;
     font-size: 1rem;
     border: none;
-    background-color: #FF6F61;
-    color: #121212;
+    background-color: var(--orange);
+    color: var(--white);
     border-radius: 0.3125rem;
-    /* 5px */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -76,6 +75,6 @@
     margin-left: 10px;
     display: inline-block;
     vertical-align: middle;
-    white-space: nowrap;
+    white-bg-space: nowrap;
     text-align: left;
 }

@@ -8,7 +8,9 @@
     <!-- CSS 경로 수정 -->
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/login.css">
-    <link rel="stylesheet" href="/styles/security.css">
+    <link rel="stylesheet" href="/styles/admin.css">
+    <link rel="stylesheet" href="./styles/mypage.css">
+    <link rel="stylesheet" href="./styles/upload.css">
 </head>
 <body>
     <header>
@@ -16,9 +18,9 @@
         <a href="/" class="logo"><img src="/images/logo.svg" alt="짤방저장소" class="logo-img"></a>
         <nav class="nav">
             <ul class="nav-list">
-                <li class="nav-item"><a href="" class="nav-link nav-link_hover">짤 올리기</a></li>
-                <li class="nav-item"><a href="#" class="nav-link nav-link_hover">마이페이지</a></li>
-                <% if (session.user) { %>
+                <li class="nav-item"><a href="/upload" class="nav-link nav-link_hover">짤 올리기</a></li>
+                <li class="nav-item"><a href="/mypage" class="nav-link nav-link_hover">마이페이지</a></li>
+                <% if (locals.user) { %>
                     <!-- 로그인한 경우 로그아웃 버튼 -->
                     <li class="nav-item"><a href="/logout" class="nav-link nav-link_hover">로그아웃</a></li>
                 <% } else { %>

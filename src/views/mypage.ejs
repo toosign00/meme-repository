@@ -1,0 +1,114 @@
+<%- include('header') %>
+
+  <main class="my-page">
+    <ul class="page-ul">
+      <li data-target="section1">마음에 들어요</li>
+      <li data-target="section2">내가 올린 짤</li>
+      <li data-target="section3">회원 정보 수정</li>
+    </ul>
+
+    <!-- 마음에 들어요 섹션 -->
+    <section id="section1" class="content-section" style="display: flex;">
+      <h2>마음에 들어요</h2>
+      <div class="masonry-grid" id="liked-posts">
+        <% if (likedPosts && likedPosts.length> 0) { %>
+          <% likedPosts.forEach(post=> { %>
+            <div class="grid-item">
+              <div class="image-container">
+                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" loading="lazy">
+              </div>
+              <div class="post-info">
+                <div class="post-header">
+                  <h3 class="post-title">
+                    <%= post.title %>
+                  </h3>
+                  <div class="like-count">
+                    <span>♡</span>
+                    <span class="count">
+                      <%= post.likes.length %>
+                    </span>
+                  </div>
+                </div>
+                <p class="post-author">
+                  작성자: <%= post.author.nickname || post.authorNickname %>
+                </p>
+                <div class="post-actions">
+                  <!-- 좋아요 섹션에서는 추가적인 버튼이 필요하지 않으므로 비워둡니다 -->
+                </div>
+              </div>
+            </div>
+            <% }); %>
+              <% } else { %>
+                <p class="no-posts">좋아요를 누른 게시물이 없습니다.</p>
+                <% } %>
+      </div>
+    </section>
+
+
+    <section id="section2" class="content-section" style="display: none;">
+      <h2>내가 올린 짤</h2>
+      <div class="masonry-grid" id="my-posts">
+        <% if (userPosts && userPosts.length> 0) { %>
+          <% userPosts.forEach(post=> { %>
+            <div class="grid-item">
+              <div class="image-container">
+                <img src="<%= post.imageUrl %>" alt="<%= post.title %>" loading="lazy">
+              </div>
+              <div class="post-info">
+                <div class="post-header">
+                  <h3 class="post-title">
+                    <%= post.title %>
+                  </h3>
+                  <div class="like-count">
+                    <span>♡</span>
+                    <span class="count">0</span>
+                  </div>
+                </div>
+                <p class="post-author">
+                  <%= post.authorNickname %>
+                </p>
+                <div class="post-actions">
+                  <button class="delete-post" data-post-id="<%= post._id %>">삭제</button>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+              <% } else { %>
+                <p class="no-posts">아직 업로드한 게시물이 없습니다.</p>
+                <% } %>
+      </div>
+    </section>
+
+    <section id="section3" class="content-section" style="display: none;">
+      <h2>회원 정보</h2>
+
+      <div id="user-info">
+        <p>이메일: <span id="user-email">
+            <%= user.email %>
+          </span></p>
+        <p>닉네임: <span id="user-nickname">
+            <%= user.nickname %>
+          </span></p>
+        <button id="edit-button" class="cta-btn">수정</button>
+      </div>
+
+      <form id="edit-form" style="display: none;">
+        <label for="edit-email">이메일</label>
+        <input type="email" id="edit-email" name="email" value="<%= user.email %>" required />
+
+        <label for="edit-nickname">닉네임</label>
+        <input type="text" id="edit-nickname" name="nickname" value="<%= user.nickname %>" required />
+
+        <label for="edit-password">비밀번호</label>
+        <input type="password" id="edit-password" name="password" placeholder="새 비밀번호" />
+
+        <button type="submit" value="update" class="cta-btn">수정</button>
+        <button type="submit" value="delete" class="cta-btn">삭제</button>
+        <button type="button" id="cancel-button" class="cta-btn">취소</button>
+      </form>
+    </section>
+  </main>
+  <script src="/scripts/mypage.js"></script>
+  </body>
+
+  </html>

@@ -1,0 +1,36 @@
+<%- include('header') %>
+  <main class="upload-main">
+    <div class="upload-container">
+      <div class="upload-box">
+        <div class="upload-preview">
+          <div class="image-placeholder" id="imagePreview">
+            <span class="placeholder-text">이미지 업로드</span>
+          </div>
+        </div>
+        <form action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+          <div class="input-group">
+            <label for="file" class="file-label">
+              이미지 선택
+              <input type="file" id="file" name="image" accept="image/*" class="file-input" required>
+            </label>
+          </div>
+          <div class="input-group">
+            <input type="text" id="title" name="title" class="title-input" placeholder="제목을 입력하세요 20자 이내" maxlength="20"
+              required>
+          </div>
+          <div class="input-group">
+            <div class="nickname-display">
+              작성자: <%= user.nickname %>
+            </div>
+          </div>
+          <button type="submit" class="upload-btn">짤 올리기</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="/scripts/upload.js"></script>
+
+  </body>
+
+  </html>
