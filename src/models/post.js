@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxLength: 20,
-    trim: true // 앞뒤 공백 제거
+    trim: true
   },
   imageUrl: {
     type: String,
@@ -32,13 +32,12 @@ const postSchema = new mongoose.Schema({
     default: 0
   }
 }, {
-  // 가상 필드나 직렬화 옵션 등을 위한 스키마 옵션
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
 });
 
 // 생성 시간에 대한 가상 필드 (더 보기 좋은 형식)
-postSchema.virtual('formattedCreatedAt').get(function() {
+postSchema.virtual('formattedCreatedAt').get(function () {
   return this.createdAt.toLocaleString('ko-KR', {
     year: 'numeric',
     month: '2-digit',

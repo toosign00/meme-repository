@@ -100,6 +100,10 @@ const loginUser = asyncHandler(async (req, res) => {
             { expiresIn: '24h' }
         );
 
+        // tokens 배열에 새 토큰 추가
+        user.tokens = user.tokens.concat({ token });
+        await user.save();  // 변경사항 저장
+
         // 쿠키에 토큰 저장
         res.cookie('token', token, {
             httpOnly: true,
