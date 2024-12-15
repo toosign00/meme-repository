@@ -100,9 +100,9 @@ const loginUser = asyncHandler(async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        // tokens 배열에 새 토큰 추가
-        user.tokens = user.tokens.concat({ token });
-        await user.save();  // 변경사항 저장
+        // tokens 배열을 새 토큰으로 교체
+        user.tokens = [{ token }];  // 기존 토큰을 모두 삭제하고 새 토큰으로 대체
+        await user.save(); // 데이터베이스에 저장
 
         // 쿠키에 토큰 저장
         res.cookie('token', token, {
@@ -281,6 +281,14 @@ const updateUserOrDelete = asyncHandler(async (req, res) => {
                 }
             }
 
+            await Post.updateMany(
+                { likes: userId },
+                {
+                    $pull: { likes: userId },
+                    $inc: { likeCount: -1 }
+                }
+            );
+
             // 데이터베이스에서 사용자와 게시물 삭제
             const deletedUser = await User.findByIdAndDelete(userId);
             if (!deletedUser) {
@@ -296,7 +304,8 @@ const updateUserOrDelete = asyncHandler(async (req, res) => {
 - 이메일: ${deletedUser.email}
 - 닉네임: ${deletedUser.nickname}
 - 삭제된 게시물 수: ${deletedPostsCount}
-- 삭제된 이미지 파일 수: ${deletedImagesCount}`);
+- 삭제된 이미지 파일 수: ${deletedImagesCount}
+- 좋아요 데이터 정리 완료`);
 
             res.clearCookie('token');
             res.json({
@@ -322,19 +331,25 @@ const deleteUserByAdmin = asyncHandler(async (req, res) => {
 
         // 먼저 해당 사용자의 모든 게시물을 찾습니다
         const userPosts = await Post.find({ author: userId });
-
-        // 삭제된 이미지 파일 수를 추적
         let deletedImagesCount = 0;
 
         // 각 게시물의 이미지 파일을 삭제합니다
         for (const post of userPosts) {
             const imagePath = path.join('public', post.imageUrl);
-            // 파일이 존재하는지 확인 후 삭제
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
                 deletedImagesCount++;
             }
         }
+
+        // 사용자가 좋아요 누른 게시물들에서 likes 배열 업데이트
+        await Post.updateMany(
+            { likes: userId },
+            {
+                $pull: { likes: userId },
+                $inc: { likeCount: -1 }
+            }
+        );
 
         // 사용자 정보를 삭제하기 전에 먼저 가져옵니다
         const userToDelete = await User.findById(userId);
@@ -361,7 +376,8 @@ const deleteUserByAdmin = asyncHandler(async (req, res) => {
         · 역할: ${userToDelete.role}
         · 가입일: ${userToDelete.createdAt}
         - 삭제된 게시물 수: ${deletedPostsCount}
-        - 삭제된 이미지 파일 수: ${deletedImagesCount}`);
+        - 삭제된 이미지 파일 수: ${deletedImagesCount}
+        - 좋아요 데이터 정리 완료`);
 
         res.json({
             success: true,

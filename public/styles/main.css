@@ -22,6 +22,7 @@ body {
     background-color: var(--white-bg);
     color: var(--black);
     padding: 1.25rem 5rem;
+    overflow-y: scroll;
 }
 
 header {
@@ -193,57 +194,4 @@ header {
     body {
         padding: 1rem;
     }
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.modal-content {
-    position: relative;
-    margin: auto;
-    padding: 20px;
-    max-width: 90%;
-    max-height: 90vh;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    border-radius: 8px;
-}
-
-.modal-content img {
-    width: 100%;
-    height: auto;
-    max-height: 70vh;
-    object-fit: contain;
-}
-
-.close-modal {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #333;
-}
-
-.modal-info {
-    margin-top: 15px;
-    padding: 10px;
-}
-
-.modal-info h3 {
-    margin: 0 0 10px 0;
-}
-
-.modal-likes {
-    margin-top: 10px;
 }
